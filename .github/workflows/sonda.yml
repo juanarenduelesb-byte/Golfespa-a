@@ -1,0 +1,17 @@
+name: Sonda de fuentes
+on: workflow_dispatch
+jobs:
+  sonda:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          UA='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130 Safari/537.36'
+          for u in "https://scoreboard.clippd.com/players/32957" \
+                   "https://scoreboard.clippd.com/tournaments/245259/scoring/player" \
+                   "https://scoreboard.clippd.com/api/tournaments?gender=Women&division=NCAA%20Division%20I&startDate%5Bfrom%5D=2026-11-01&startDate%5Bto%5D=2026-12-31&offset=0&limit=100" \
+                   "https://api.euro.ocs-software.com/let/cache/let/2026/2026-1918-scores-latest.json" \
+                   "https://worldgolfranking2021api.wagr.com/api/wagr/rankings/getRankings?rankingsType=1&pageNumber=1&week=0&year=0&region=0&countries=3&playerName=&county=&pageSize=1000&playerIDs=&age=&asOfDate=&includeFirstStats=false&sortString=&isRangeUnder=false&isRangeOver=false&isThisAgeOnly=false" \
+                   "https://mitarjeta.golf/torneos/clasificacion/394"; do
+            echo "SONDA $(curl -s -A "$UA" -o /tmp/x -w '%{http_code} %{size_download}' -m 30 "$u") $u"
+            echo "   contiene jugadora: $(grep -c -i -E 'davalos|revuelta|balanzategui|toquero' /tmp/x)"
+          done
