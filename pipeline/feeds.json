@@ -1,0 +1,6 @@
+{
+  "_ayuda": "Un torneo por entrada. type: lgs = clasificaciones de rfegolf.livegolfscoring.es o mitarjeta.golf (la plataforma de la RFEG). event = id del torneo en la web (osp26, isp, cat26…). mode = nac o ncaa. Las jugadoras se emparejan solas por nombre; 'players' solo hace falta si el nombre en la clasificación es distinto.",
+  "feeds": [
+    {"event": "cat26", "mode": "nac", "type": "lgs", "a": "2026-10-17", "b": "2026-10-18", "url": "https://mitarjeta.golf/torneos/clasificacion/394", "note": "2.ª categoría (clasificación conjunta)"}
+  ]
+}

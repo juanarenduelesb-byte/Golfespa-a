@@ -1,0 +1,46 @@
+name: Actualizar resultados
+
+on:
+  schedule:
+    # Hora UTC (Madrid = +1 en invierno). GitHub a veces retrasa estas tareas;
+    # por eso hay una pasada temprana y otras cada 2 horas: si no hay torneos en juego terminan en segundos sin cambiar nada.
+    - cron: '23 5 * * *'
+    - cron: '41 9-21/2 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: actualizar
+  cancel-in-progress: false
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Leer clasificaciones
+        id: leer
+        run: python3 pipeline/actualizar.py
+      - name: Validar
+        run: node pipeline/validar.mjs
+      - name: Guardar (Cloudflare publica solo al ver el cambio)
+        run: |
+          git config user.name "actualizador"
+          git config user.email "actions@users.noreply.github.com"
+          # Se guarda si cambió algún resultado, o en la pasada de la mañana para que la fecha «Actualizado» sea la de hoy.
+          # Así no se gastan publicaciones de Cloudflare en pasadas sin novedades.
+          if [ "${{ steps.leer.outputs.cambios }}" != "1" ] && [ "$(date -u +%H)" != "05" ]; then
+            echo "Sin resultados nuevos"; exit 0; fi
+          git add site/auto.js
+          git diff --cached --quiet && { echo "Nada que guardar"; exit 0; }
+          git commit -m "Resultados $(TZ=Europe/Madrid date '+%d/%m %H:%M')"
+          git push

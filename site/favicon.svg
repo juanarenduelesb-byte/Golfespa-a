@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#12a3a0"/><stop offset="1" stop-color="#0a4f5c"/>
+    </linearGradient>
+    <linearGradient id="sh" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".45"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="url(#bg)"/>
+  <rect width="64" height="64" rx="15" fill="url(#sh)"/>
+  <ellipse cx="32" cy="51" rx="21" ry="6.5" fill="#7fe0a6"/>
+  <ellipse cx="34.5" cy="50.5" rx="3.3" ry="1.5" fill="#073a43"/>
+  <rect x="33" y="11" width="3" height="40" rx="1.5" fill="#fff"/>
+  <path d="M36 12 L54 17.5 L36 23 Z" fill="#c60b1e"/>
+  <path d="M36 15.4 L46.8 17.5 L36 19.6 Z" fill="#ffc400"/>
+  <circle cx="23" cy="47.5" r="4" fill="#fff"/>
+  <circle cx="22" cy="46.6" r=".7" fill="#cfd8da"/><circle cx="24.2" cy="47" r=".7" fill="#cfd8da"/><circle cx="23" cy="48.8" r=".7" fill="#cfd8da"/>
+</svg>

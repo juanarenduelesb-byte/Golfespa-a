@@ -1,0 +1,2 @@
+/* Lo genera pipeline/actualizar.py cada día. No editar a mano. */
+window.AUTO={"upd":"25 nov","rev":"2026-11-25T11:04:26+01:00","res":{"ncaa":{},"nac":{"e53":{"cat26":{"pos":"T10","rounds":["80","80"],"tp":16,"field":105,"holes":36,"src":"https://mitarjeta.golf/torneos/clasificacion/394","tot":160,"note":"2.ª categoría (clasificación conjunta)"}},"e54":{"cat26":{"pos":"T7","rounds":["78","79"],"tp":13,"field":105,"holes":36,"src":"https://mitarjeta.golf/torneos/clasificacion/394","tot":157,"note":"2.ª categoría (clasificación conjunta)"}}}},"errores":[]};
