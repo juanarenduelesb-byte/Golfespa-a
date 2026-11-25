@@ -2,12 +2,16 @@ name: Actualizar resultados
 
 on:
   schedule:
-    # Hora UTC (Madrid = +1 en invierno). GitHub a veces retrasa o se salta estas tareas, por eso hay
-    # una pasada temprana y otras cada 2 horas: la primera que llegue cada día guarda la fecha nueva,
-    # y las demás solo guardan si hay resultados nuevos (si no, terminan en segundos sin tocar nada).
-    - cron: '23 5 * * *'
-    - cron: '41 7-21/2 * * *'
+    # Cada 2 horas, día y noche (hora UTC; los torneos de EE. UU. se juegan de madrugada en España).
+    # Solo se guarda algo si cambia un resultado, un torneo o el ranking, o en la primera pasada de cada día
+    # para que la fecha «Actualizado» sea la de hoy. Las demás pasadas terminan sin tocar nada.
+    - cron: '23 */2 * * *'
   workflow_dispatch:
+    inputs:
+      temporada:
+        description: 'Repasar toda la temporada NCAA (más lento; para rellenar huecos)'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -19,14 +23,14 @@ concurrency:
 jobs:
   actualizar:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v5
 
       # Python 3 y Node ya vienen instalados en la máquina de GitHub; no hace falta nada más.
-      - name: Leer clasificaciones
+      - name: Leer fuentes (Clippd, LET, WAGR, RFEG)
         id: leer
-        run: python3 pipeline/actualizar.py
+        run: python3 pipeline/actualizar.py ${{ inputs.temporada && '--temporada' || '' }}
 
       - name: Validar
         run: node pipeline/validar.mjs
@@ -34,10 +38,10 @@ jobs:
       - name: Guardar (Cloudflare publica solo al ver el cambio)
         run: |
           if [ "${{ steps.leer.outputs.cambios }}" != "1" ] && [ "${{ steps.leer.outputs.nuevo_dia }}" != "1" ] && [ "${{ github.event_name }}" != "workflow_dispatch" ]; then
-            echo "Sin resultados nuevos y la fecha ya es la de hoy: no se guarda nada"; exit 0; fi
+            echo "Sin novedades y la fecha ya es la de hoy: no se guarda nada"; exit 0; fi
           git config user.name "actualizador"
           git config user.email "actions@users.noreply.github.com"
-          git add site/auto.js
+          git add site/auto.js pipeline/estado.json
           git diff --cached --quiet && { echo "Nada que guardar"; exit 0; }
           git commit -m "Resultados $(TZ=Europe/Madrid date '+%d/%m %H:%M')"
           # Si alguien ha guardado otro cambio mientras tanto, se coloca encima y se reintenta.

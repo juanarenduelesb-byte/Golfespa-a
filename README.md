@@ -6,30 +6,31 @@ Las golfistas españolas en la NCAA (EE. UU.) y en el circuito nacional: calenda
 
 - `site/`: la web. Es estática (un solo `index.html` con los datos dentro) y la publica Cloudflare Pages cada vez que cambia algo en la rama `main`.
 - `site/auto.js`: los resultados que se leen solos. Lo escribe la actualización; no se edita a mano. La web lo mezcla con sus datos al cargar: si un torneo ya tiene un resultado final escrito a mano, manda el manual.
-- `pipeline/feeds.json`: la lista de torneos que se leen solos, con la dirección de su clasificación.
-- `pipeline/actualizar.py`: lee esas clasificaciones, empareja a las jugadoras por nombre y escribe `site/auto.js`.
+- `pipeline/fuentes.json`: las fuentes (número de cada jugadora en Clippd, torneos del LET y de la RFEG).
+- `pipeline/actualizar.py`: lee las fuentes y escribe `site/auto.js` (y `pipeline/estado.json`, lo que va aprendiendo).
 - `pipeline/validar.mjs`: comprueba que todo carga antes de guardar. Si algo falla, no se guarda nada y la web se queda como estaba.
-- `.github/workflows/actualizar.yml`: la actualización automática. Pasada cada mañana (6:23 en invierno) y cada 2 horas durante el día; las pasadas sin torneos en juego terminan en segundos sin tocar nada.
+- `.github/workflows/actualizar.yml`: la actualización automática. Cada 2 horas, día y noche; solo guarda si hay novedades (y una vez al día para la fecha).
 
-## Qué se actualiza solo
+## Qué se actualiza solo (cada 2 horas, día y noche)
 
-- La fecha de «Actualizado», cada mañana.
-- El estado de cada torneo (próximo, en juego, pendiente, jugado): sale de las fechas, la propia web lo calcula.
-- Los resultados de los torneos que están en `pipeline/feeds.json`, mientras se juegan y hasta 3 días después.
+- **NCAA (Clippd Scoreboard):** los torneos de cada jugadora, también los futuros en cuanto su universidad se inscribe; los resultados, con vueltas, puesto y empates, y el marcador en directo mientras juegan. Los torneos que no estaban en la web se añaden solos a su calendario.
+- **Ladies European Tour:** clasificación en directo y final de los torneos de `pipeline/fuentes.json` (ahora, el Open de España).
+- **Ranking mundial amateur (WAGR):** el puesto de esta semana de cada jugadora de la NCAA y su histórico mensual.
+- **RFEG:** las clasificaciones de los torneos apuntados en `pipeline/fuentes.json`.
+- **Palmarés:** cada victoria o podio nuevo en un torneo individual se añade solo a sus logros; si un logro escrito a mano tenía mal el puesto, se corrige.
+- **Estado de cada torneo** (próximo, en juego, pendiente, jugado) y la fecha «Actualizado».
 
-Fuentes que ya se leen: clasificaciones de la RFEG (`rfegolf.livegolfscoring.es`, `mitarjeta.golf`).
+Lo que dicen las fuentes oficiales manda sobre lo escrito a mano.
 
 ## Qué sigue siendo manual
 
-Añadir un torneo nuevo, una jugadora nueva o un texto de logros se hace en `site/index.html`. Para que un torneo se lea solo, añade una línea a `pipeline/feeds.json`:
-
-```json
-{"event": "id-del-torneo", "mode": "nac", "type": "lgs", "a": "2027-03-02", "b": "2027-03-07", "url": "https://rfegolf.livegolfscoring.es/torneos/clasificacion/NNN"}
-```
+- Jugadoras nuevas (en NCAA, además, su número de Clippd en `pipeline/fuentes.json`).
+- Torneos nacionales y del Ladies European Tour: añadirlos a `pipeline/fuentes.json` con su enlace de resultados.
+- Textos de perfil y logros que no salen de una clasificación.
 
 ## Lanzarla a mano
 
-Pestaña **Actions** → **Actualizar resultados** → **Run workflow**.
+Pestaña **Actions** → **Actualizar resultados** → **Run workflow**. Marcando «Repasar toda la temporada» vuelve a leer la NCAA desde agosto.
 
 ## Configuración de Cloudflare Pages
 

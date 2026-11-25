@@ -460,7 +460,7 @@ const UPD=(window.AUTO&&AUTO.upd)||"25 nov";
 const WAGR_H={"2026-10":{"pms":3,"are":2,"pfr":28,"bda":43,"cfg":32,"rte":168,"lir":739,"aca":238,"mnn":856,"nma":272,"cam":1300,"avr":246,"dcm":561,"are2":710,"mll":745,"lva":759,"vft":977,"mag":858,"jbb":1453,"igo":1464,"cla":751,"cpt":462},"2026-11":{"pms":6,"are":3,"pfr":24,"bda":38,"cfg":27,"rte":210,"lir":707,"aca":237,"mnn":835,"nma":270,"cam":1292,"avr":232,"dcm":625,"are2":748,"mll":755,"lva":733,"vft":973,"mag":840,"jbb":1439,"igo":1441,"cla":770,"cpt":377}};
 const WAGR_NAC={"2026-10":{"e01":-4.3,"e02":-4.5,"e03":-5.0,"e04":-3.8,"e05":-3.9,"e06":-2.8,"e07":-4.0,"e08":-3.5,"e09":-4.0,"e10":-3.9,"e11":-4.5,"e12":-3.5,"e13":-3.4,"e14":-2.9,"e15":-2.7,"e16":-2.6,"e17":-2.6,"e18":-2.6,"e19":-2.5,"e20":-2.4,"e21":-2.4,"e22":-2.4,"e23":-2.1,"e24":-2.0,"e25":-1.3,"e26":-1.5,"e27":-0.6,"e28":-1.2,"e29":-1.3,"e30":-1.2,"e31":-0.3,"e32":0.1,"e33":-0.9,"e34":-0.2,"e35":0.1,"e36":-0.1,"e37":1.0,"e38":-1.5,"e39":0.1,"e40":0.6,"e41":0.5,"e42":0.7,"e43":0.9,"e44":0.9,"e45":1.2,"e46":1.8,"e47":2.3,"e48":2.5,"e49":2.5,"e50":3.7,"e51":4.1,"e52":4.3,"e53":4.5,"e54":4.9,"e55":5.9},"2026-11":{"e01":-4.3,"e02":-4.5,"e03":-5.0,"e04":-3.8,"e05":-3.9,"e06":-2.8,"e07":-4.0,"e08":-3.5,"e09":-4.0,"e10":-3.9,"e11":-4.5,"e12":-3.5,"e13":-3.4,"e14":-2.9,"e15":-2.7,"e16":-2.6,"e17":-2.6,"e18":-2.6,"e19":-2.5,"e20":-2.4,"e21":-2.4,"e22":-2.4,"e23":-2.1,"e24":-2.0,"e25":-1.3,"e26":-1.5,"e27":-0.6,"e28":-1.2,"e29":-1.3,"e30":-1.2,"e31":-0.3,"e32":0.1,"e33":-0.9,"e34":-0.2,"e35":0.1,"e36":-0.1,"e37":1.0,"e38":-1.5,"e39":0.1,"e40":0.6,"e41":0.5,"e42":0.7,"e43":0.9,"e44":0.9,"e45":1.2,"e46":1.8,"e47":2.3,"e48":2.5,"e49":2.5,"e50":3.7,"e51":4.1,"e52":4.3,"e53":4.5,"e54":4.9,"e55":5.9}};
 /* ---------- MODOS: ncaa (EE.UU.) | nac (nacional) ---------- */
-const MODES={ncaa:{t:"Españolas en la NCAA",s:"Golf femenino · temporada 2026-27",k:"esp-ncaa",sea:"2026-27",org:"universidades",d:"Jugando en EE.UU."},nac:{t:"Españolas · Nacional",s:"Golf femenino · temporada 2026",k:"esp-nac",sea:"2026",org:"categorías",d:"Circuito nacional"}};
+const MODES={ncaa:{t:"Españolas en la NCAA",s:"Golf femenino · temporada 2026-27",k:"esp-ncaa",sea:"2026-27",org:"universidades",d:"Jugando en EE.UU."},nac:{t:"Españolas · Nacional",s:"Golf femenino · circuito nacional",k:"esp-nac",sea:"2026",org:"categorías",d:"Circuito nacional"}};
 /* Datos modo Nacional (fuente: listado de inscritas del Internacional de España Stroke Play Femenino 2026, RFEG, 16-oct-2026; año de nacimiento: Ranking Nacional Sub-18 Femenino RFEG). Categoría y grupo se calculan por año de nacimiento. */
 const NAC_EV=[E("isp25","Internacional de España Stroke Play Femenino 2025","2025-10-24","2025-10-26","El Saler · Valencia"),E("pnj","Puntuable Nacional Juvenil Femenino","2026-02-27","2026-03-01","Salamanca Fórum Golf · Salamanca"),E("reina","Copa de S.M. La Reina","2026-03-03","2026-03-08","La Reserva de Sotogrande · Cádiz"),E("sub18","Campeonato de España Sub-18 Femenino","2026-03-19","2026-03-22","RCG Guadalmina · Marbella"),E("sub16","Campeonato de España Sub-16 Femenino","2026-05-01","2026-05-03","Infinitum Lakes · Tarragona"),E("abs","Campeonato de España Absoluto Femenino","2026-06-04","2026-06-07","Pula Golf · Mallorca"),E("inf","Campeonato de España Infantil Femenino","2026-06-26","2026-06-28","RCG La Manga · Murcia"),E("cand26","Copa de Andalucía Femenina 2026","2026-01-09","2026-01-12","Sherry Golf Jerez · Cádiz"),E("isp","Internacional de España Stroke Play Femenino 2026","2026-10-23","2026-10-25","Isla Canela Golf · Ayamonte, Huelva"),
 /* Internacionales y Campeonatos de España por equipos (fuentes: WAGR, EGA, RFEG) */
@@ -586,8 +586,44 @@ const rkD=d=>isNac()?Math.abs(d).toFixed(1).replace(".",","):String(Math.abs(d))
 const RKN=()=>isNac()?"Hándicap":"WAGR";
 const catP=p=>p.by?catOf(p.by):(p.catx||"Por confirmar");
 const catOf=by=>{if(!by)return "Por confirmar";const a=new Date().getFullYear()-by;return a<=10?"Benjamín":a<=12?"Alevín "+(a-10):a<=14?"Infantil "+(a-12):a<=16?"Cadete "+(a-14):a<=18?"Girl "+(a-16):"Absoluta";};
-/* Resultados automáticos (pipeline/actualizar.py → auto.js). Mandan sobre lo manual salvo que lo manual ya sea un resultado final. */
-(function(){const A=window.AUTO&&AUTO.res;if(!A)return;for(const m of Object.keys(DATA)){const byId={};DATA[m].P.forEach(p=>byId[p.id]=p);for(const[pid,evs]of Object.entries(A[m]||{})){const p=byId[pid];if(!p)continue;p.res=p.res||{};for(const[eid,r]of Object.entries(evs)){const cur=p.res[eid];if(!cur||cur.live||cur.pending||cur.auto)p.res[eid]=Object.assign({auto:true},r);}}}})();
+/* Datos automáticos (pipeline/actualizar.py → auto.js): torneos nuevos, resultados, ranking WAGR y palmarés. */
+(function(){const A=window.AUTO;if(!A)return;
+ const MS=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+ const sortEv=a=>a.sort((x,y)=>x.a<y.a?-1:x.a>y.a?1:0);
+ const mk=e=>Object.assign(E(e.id,e.n,e.a,e.b,e.loc,"",e.fmt||"stroke",e.par||null),e.ind?{ind:true}:{},e.only?{only:e.only}:{},e.src?{src:e.src}:{});
+ /* torneos nuevos: NCAA por universidad, nacional en la lista común */
+ const evN=(A.ev&&A.ev.ncaa)||{};for(const[u,list]of Object.entries(evN)){if(!S[u])continue;list.forEach(e=>{if(!S[u].some(x=>x.id===e.id))S[u].push(mk(e));});sortEv(S[u]);}
+ ((A.ev&&A.ev.nac)||[]).forEach(e=>{if(!NAC_EV.some(x=>x.id===e.id))NAC_EV.push(mk(e));});
+ /* ranking WAGR de esta semana */
+ for(const[ym,snap]of Object.entries(A.wh||{}))WAGR_H[ym]=Object.assign(WAGR_H[ym]||{},snap);
+ const nm=s=>String(s||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
+ for(const m of Object.keys(DATA)){const byId={};DATA[m].P.forEach(p=>byId[p.id]=p);
+  if(m==="ncaa")for(const[pid,w]of Object.entries(A.wagr||{}))if(byId[pid]&&w)byId[pid].wagr=w;
+  for(const[pid,evs]of Object.entries((A.res||{})[m]||{})){const p=byId[pid];if(!p)continue;p.res=p.res||{};
+   for(const[eid,r]of Object.entries(evs)){const cur=p.res[eid];
+    /* La fuente oficial (Clippd, LET, RFEG) manda: corrige también errores de lo escrito a mano. Se conserva el texto de partido si lo había. */
+    p.res[eid]=Object.assign({auto:true},cur&&cur.match?{match:cur.match}:{},r);
+    if(p.ev&&!p.ev.includes(eid))p.ev.push(eid);
+    /* que el torneo aparezca en su calendario aunque no estuviera previsto para ella */
+    if(m==="ncaa"&&S[p.u]){let e=S[p.u].find(x=>x.id===eid);
+     if(!e){const src=[].concat(...Object.values(S)).find(x=>x.id===eid);if(src){e=Object.assign({},src,{only:[p.id]});S[p.u].push(e);sortEv(S[p.u]);}}
+     else if(e.only&&!e.only.includes(p.id))e.only.push(p.id);}
+    /* palmarés: victorias y podios nuevos de torneos individuales de stroke play ya terminados */
+    const n=parseInt(String(r.pos).replace(/^T/,""),10);if(r.live||!(n>=1&&n<=3))continue;
+    const all=[].concat(...Object.values(DATA[m].S)).concat(m==="nac"?NAC_EV:[]);const ev=all.find(x=>x.id===eid);if(!ev||ev.fmt!=="stroke")continue;
+    p.hl=p.hl||[];
+    const words=nm(ev.n).split(/[^a-z0-9]+/).filter(w=>w.length>3&&!/^(invitational|intercollegiate|collegiate|classic|presented|championship|women)$/.test(w)).slice(0,2);
+    const B=new Date(ev.b+"T12:00:00"),when=/\d{4}/.test(ev.n)?"":" en "+MS[B.getMonth()]+" de "+B.getFullYear();
+    const art=/^the\s/i.test(ev.n)?"":"el ";
+    const tp=r.tp==null?"":r.tp===0?" con el par":" con "+(r.tp>0?"+":"−")+Math.abs(r.tp);
+    const line=n===1?(String(r.pos).startsWith("T")?"Ganó (empatada) ":"Ganó ")+art+ev.n+when+tp:(String(r.pos).startsWith("T")?"T"+n:n+".ª")+" en "+art+ev.n+when+tp;
+    const i=words.length?p.hl.findIndex(h=>words.every(w=>nm(h).includes(w))):-1;
+    if(i<0){p.hl.unshift(line);continue;}
+    /* ya lo mencionaba: si el puesto escrito no coincide con el oficial, se corrige la línea */
+    const old=p.hl[i],posTxt=(old.match(/\b(T?\d+)(\.?[ºª])?\s+(en|del|de la)\b/)||[])[1],won=/gan[oó]|campeona|victori|t[ií]tulo/i.test(old);
+    if((n===1&&!won)||(n>1&&posTxt&&posTxt.replace(/^T/,"")!==String(n)))p.hl[i]=line;
+   }}}
+})();
 let MODE="ncaa";try{const m=localStorage.getItem("esp-mode");if(MODES[m])MODE=m;}catch(e){}
 ({U,S,P,PAR,WH}=DATA[MODE]);
 const SRC_GENERAL = [["Clippd Scoreboard (NCAA D-I femenino)","https://scoreboard.clippd.com/results/upcoming?gender=Women&division=NCAA+Division+I"]];
@@ -645,7 +681,7 @@ function infoSvg(){const NS="http://www.w3.org/2000/svg",s=document.createElemen
 /* ---------- STATE ---------- */
 const NSEASONS={2026:{isp:"isp25",from:"2026-01-01",to:"2026-10-22"},2027:{isp:"isp",from:"2026-10-23",to:"2027-10-21"}};
 const inSeason=(e,y)=>{const z=NSEASONS[y];return !z||e.id===z.isp||(e.a>=z.from&&e.a<=z.to);};
-let RSEA=2026;
+let RSEA=(()=>{const t=new Date().toISOString().slice(0,10);const k=Object.keys(NSEASONS).find(y=>t>=NSEASONS[y].from&&t<=NSEASONS[y].to);return k?+k:Math.max(...Object.keys(NSEASONS).map(Number));})(); /* abre en la temporada en curso */
 let cur=null, tab="resumen", view="overview", calMonth=null, repMonth=null, rankKey="avg", rankAsc=true, playersCollapsed=false, favFilter=false;
 const favs=new Set();
 function loadState(){cur=P[0]?P[0].id:null;tab="resumen";view="overview";calMonth=null;repMonth=null;favFilter=false;favs.clear();try{const s=localStorage.getItem(MODES[MODE].k);if(s){const o=JSON.parse(s);if(P.some(p=>p.id===o.cur))cur=o.cur;if(o.tab)tab=o.tab;if(["live","overview","calendar","report","ranking","player"].includes(o.view))view=o.view;if(typeof o.calMonth==="number")calMonth=o.calMonth;if(typeof o.repMonth==="number")repMonth=o.repMonth;if(Array.isArray(o.favs)&&o.favs.length>0){o.favs.forEach(id=>favs.add(id));if(o.favFilter)favFilter=true;}}}catch(e){}}

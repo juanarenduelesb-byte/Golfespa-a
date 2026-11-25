@@ -1,0 +1,10 @@
+{
+  "_ayuda": "Configuración de las fuentes. clippd: id de cada jugadora NCAA en scoreboard.clippd.com (la web saca sola sus torneos y resultados). let: torneos del Ladies European Tour (tid = número del torneo en ladieseuropeantour.com/tournaments-information/TID/AÑO). lgs: torneos de la RFEG con su página de clasificación.",
+  "clippd": {"pms": "18330", "are": "37895", "pfr": "21746", "bda": "32957", "cfg": "16863", "rte": "33884", "lir": "5549", "aca": "32728", "mnn": "82006", "nma": "82158", "cam": "32409", "avr": "31891", "dcm": "11038", "are2": "83955", "mll": "25605", "lva": "5241", "vft": "20416", "mag": "34477", "jbb": "24949", "igo": "82677", "cla": "30668", "cpt": "83256"},
+  "let": [
+    {"event": "osp26", "year": 2026, "tid": 1918, "a": "2026-11-26", "b": "2026-11-29", "modes": ["nac", "ncaa"], "web": "https://ladieseuropeantour.com/tournaments-information/1918/2026"}
+  ],
+  "lgs": [
+    {"event": "cat26", "mode": "nac", "a": "2026-10-17", "b": "2026-10-18", "url": "https://mitarjeta.golf/torneos/clasificacion/394", "note": "2.ª categoría (clasificación conjunta)"}
+  ]
+}

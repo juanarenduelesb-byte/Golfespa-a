@@ -9,6 +9,10 @@ for (const m of ["ncaa", "nac"]) for (const [pid, evs] of Object.entries(A.res[m
     if (typeof r.pos !== "string" || !Array.isArray(r.rounds)) fail(`resultado mal formado: ${m}/${pid}/${eid}`);
     if (!/^https:\/\//.test(r.src || "")) fail(`sin fuente: ${m}/${pid}/${eid}`);
   }
+for (const [u, list] of Object.entries((A.ev && A.ev.ncaa) || {})) for (const e of list) {
+  if (!e.id || !e.n || !/^\d{4}-\d\d-\d\d$/.test(e.a || "") || !/^\d{4}-\d\d-\d\d$/.test(e.b || "")) fail(`torneo mal formado en ${u}: ${JSON.stringify(e)}`);
+}
+for (const [pid, w] of Object.entries(A.wagr || {})) if (!(Number.isInteger(w) && w > 0)) fail(`ranking WAGR raro para ${pid}: ${w}`);
 const html = readFileSync("site/index.html", "utf8");
 const scripts = [...html.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/g)].map(m => m[1]);
 scripts.forEach((s, i) => { try { new Function(s); } catch (e) { fail(`index.html, script ${i + 1}: ${e.message}`); } });
