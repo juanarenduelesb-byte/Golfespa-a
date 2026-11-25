@@ -38,7 +38,8 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           # Se guarda si cambió algún resultado, o en la pasada de la mañana para que la fecha «Actualizado» sea la de hoy.
           # Así no se gastan publicaciones de Cloudflare en pasadas sin novedades.
-          if [ "${{ steps.leer.outputs.cambios }}" != "1" ] && [ "$(date -u +%H)" != "05" ]; then
+          # Lanzada a mano desde Actions, guarda siempre.
+          if [ "${{ steps.leer.outputs.cambios }}" != "1" ] && [ "$(date -u +%H)" != "05" ] && [ "${{ github.event_name }}" != "workflow_dispatch" ]; then
             echo "Sin resultados nuevos"; exit 0; fi
           git add site/auto.js
           git diff --cached --quiet && { echo "Nada que guardar"; exit 0; }
