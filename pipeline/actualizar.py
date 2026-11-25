@@ -80,6 +80,7 @@ def main():
     auto = json.loads(old[old.index("{"):old.rindex("}") + 1])
     res = auto.setdefault("res", {}); res.setdefault("ncaa", {}); res.setdefault("nac", {})
     before = json.dumps(res, sort_keys=True)
+    old_upd = auto.get("upd")
     pls = players(); errors = []; touched = 0
     force = "--todos" in sys.argv
     for f in feeds:
@@ -111,7 +112,9 @@ def main():
     changed = json.dumps(res, sort_keys=True) != before
     import os
     if os.environ.get("GITHUB_OUTPUT"):
-        with open(os.environ["GITHUB_OUTPUT"], "a") as g: g.write(f"cambios={'1' if changed else '0'}\n")
+        # nuevo_dia: primera pasada del día (aunque GitHub la retrase horas) → se guarda para que la fecha «Actualizado» sea la de hoy.
+        with open(os.environ["GITHUB_OUTPUT"], "a") as g:
+            g.write(f"cambios={'1' if changed else '0'}\nnuevo_dia={'1' if auto['upd'] != old_upd else '0'}\n")
     print(f"Resultados leídos: {touched}. Cambios: {'sí' if changed else 'no'}. Errores: {errors or 'ninguno'}")
     return 0
 
